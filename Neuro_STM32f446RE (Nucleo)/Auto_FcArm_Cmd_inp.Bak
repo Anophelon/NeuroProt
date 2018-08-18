@@ -1,0 +1,3 @@
+workspace\Startup\stm32f446xx_flash.icf,
+workspace\Startup\stm32f446xx_sram.icf 
+TO FCARMfile NOPRINT

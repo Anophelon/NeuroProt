@@ -1,0 +1,21 @@
+--cpu=Cortex-M4.fp
+".\objects\initsys.o"
+".\objects\liblcd.o"
+".\objects\libpwm.o"
+".\objects\libuart.o"
+".\objects\main.o"
+".\objects\croutine.o"
+".\objects\event_groups.o"
+".\objects\heap_1.o"
+".\objects\list.o"
+".\objects\port.o"
+".\objects\queue.o"
+".\objects\stream_buffer.o"
+".\objects\tasks.o"
+".\objects\timers.o"
+".\objects\startup_stm32f446xx.o"
+".\objects\system_stm32f4xx.o"
+--strict --scatter ".\Objects\NeuroNucleo.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\NeuroNucleo.map" -o .\Objects\NeuroNucleo.axf
