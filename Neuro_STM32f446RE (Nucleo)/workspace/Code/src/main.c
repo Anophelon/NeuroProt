@@ -1,13 +1,13 @@
 #include "main.h"
 
 int main(void){
-	//InitRCC();
-	//genMCO();
-	//InitGPIO();
+	InitRCC();
+	genMCO2();
+	InitGPIO();
 	//InitUART();
 	//InitTIM2();
 
-	//xTaskCreate(vTaskLed1,"LED1",32,NULL,1,NULL);
+	xTaskCreate(vTaskLed1,"LED1",32,NULL,1,NULL);
 	//xTaskCreate(vTaskBut2,"BUT",32,NULL,1,NULL);
 	//xTaskCreate(vTaskTest,"Test",32,NULL,1,NULL);
 
@@ -22,12 +22,10 @@ int main(void){
 
 void vTaskLed1 (void *argument){
 	while(1){
-		GPIOD->ODR |= GPIO_ODR_ODR_12;			//turn on led green
-		GPIOD->ODR &= ~GPIO_ODR_ODR_13;			//turn off led orange
-		vTaskDelay(1000);
-		GPIOD->ODR |= GPIO_ODR_ODR_13;			//turn on led orange
-		GPIOD->ODR &= ~GPIO_ODR_ODR_12;			//turn off led green
-		vTaskDelay(1000);
+		GPIOB->ODR |= GPIO_ODR_ODR_5;			//turn on led 
+		vTaskDelay(3000);
+		GPIOB->ODR &= ~GPIO_ODR_ODR_5;			//turn off led 
+		vTaskDelay(3000);
 	}
 }
 

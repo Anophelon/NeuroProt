@@ -1,6 +1,6 @@
 Dependencies for Project 'NeuroNucleo', Target 'Neuro': (DO NOT MODIFY !)
-F (.\workspace\Code\src\initSys.c)(0x5B77F743)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\workspace\Code\src -I .\workspace\Code\inc -I .\workspace\FreeRTOS\inc -I .\workspace\Startup-I.\RTE\_Neuro-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F446xx-o .\objects\initsys.o --omf_browse .\objects\initsys.crf --depend .\objects\initsys.d)
-I (.\workspace\Code\inc\initSys.h)(0x5B77F745)
+F (.\workspace\Code\src\initSys.c)(0x5B7955DA)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\workspace\Code\src -I .\workspace\Code\inc -I .\workspace\FreeRTOS\inc -I .\workspace\Startup-I.\RTE\_Neuro-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F446xx-o .\objects\initsys.o --omf_browse .\objects\initsys.crf --depend .\objects\initsys.d)
+I (.\workspace\Code\inc\initSys.h)(0x5B7955D9)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f446xx.h)(0x582313BA)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\core_cm4.h)(0x58988FDA)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
@@ -31,7 +31,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\cmsis_compiler.h)(0x58988FDA)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\cmsis_armcc.h)(0x58988FDA)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x582313BA)
-F (.\workspace\Code\src\main.c)(0x5B7707E0)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\workspace\Code\src -I .\workspace\Code\inc -I .\workspace\FreeRTOS\inc -I .\workspace\Startup-I.\RTE\_Neuro-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F446xx-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\workspace\Code\src\main.c)(0x5B796F2D)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\workspace\Code\src -I .\workspace\Code\inc -I .\workspace\FreeRTOS\inc -I .\workspace\Startup-I.\RTE\_Neuro-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F446xx-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (.\workspace\Code\inc\main.h)(0x5B77F743)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f446xx.h)(0x582313BA)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\core_cm4.h)(0x58988FDA)
@@ -41,7 +41,7 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\cmsis_armcc.h)(0x58988FDA)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x582313BA)
 I (.\workspace\FreeRTOS\inc\FreeRTOS.h)(0x5B75BD02)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588BC994)
-I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B75BD02)
+I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B794C52)
 I (.\workspace\FreeRTOS\inc\projdefs.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\portable.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\deprecated_definitions.h)(0x5B75BD02)
@@ -50,7 +50,7 @@ I (.\workspace\FreeRTOS\inc\mpu_wrappers.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\task.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\list.h)(0x5B77F744)
 I (.\workspace\FreeRTOS\inc\queue.h)(0x5B75BD02)
-I (.\workspace\Code\inc\initSys.h)(0x5B77F745)
+I (.\workspace\Code\inc\initSys.h)(0x5B7955D9)
 I (.\workspace\Code\inc\libUART.h)(0x5B77F744)
 I (.\workspace\Code\inc\libPWM.h)(0x5B77F745)
 I (.\workspace\Code\inc\libLCD.h)(0x5B77F745)
@@ -58,7 +58,7 @@ F (.\workspace\FreeRTOS\src\croutine.c)(0x5B75BD02)(--c99 -c --cpu Cortex-M4.fp 
 I (.\workspace\FreeRTOS\inc\FreeRTOS.h)(0x5B75BD02)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588BC994)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
-I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B75BD02)
+I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B794C52)
 I (.\workspace\FreeRTOS\inc\projdefs.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\portable.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\deprecated_definitions.h)(0x5B75BD02)
@@ -72,7 +72,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588BC994)
 I (.\workspace\FreeRTOS\inc\FreeRTOS.h)(0x5B75BD02)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588BC994)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
-I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B75BD02)
+I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B794C52)
 I (.\workspace\FreeRTOS\inc\projdefs.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\portable.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\deprecated_definitions.h)(0x5B75BD02)
@@ -87,7 +87,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588BC994)
 I (.\workspace\FreeRTOS\inc\FreeRTOS.h)(0x5B75BD02)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588BC994)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
-I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B75BD02)
+I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B794C52)
 I (.\workspace\FreeRTOS\inc\projdefs.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\portable.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\deprecated_definitions.h)(0x5B75BD02)
@@ -100,7 +100,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588BC994)
 I (.\workspace\FreeRTOS\inc\FreeRTOS.h)(0x5B75BD02)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588BC994)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
-I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B75BD02)
+I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B794C52)
 I (.\workspace\FreeRTOS\inc\projdefs.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\portable.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\deprecated_definitions.h)(0x5B75BD02)
@@ -111,7 +111,7 @@ F (.\workspace\FreeRTOS\src\port.c)(0x5B75BD02)(--c99 -c --cpu Cortex-M4.fp -g -
 I (.\workspace\FreeRTOS\inc\FreeRTOS.h)(0x5B75BD02)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588BC994)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
-I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B75BD02)
+I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B794C52)
 I (.\workspace\FreeRTOS\inc\projdefs.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\portable.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\deprecated_definitions.h)(0x5B75BD02)
@@ -125,7 +125,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BC994)
 I (.\workspace\FreeRTOS\inc\FreeRTOS.h)(0x5B75BD02)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588BC994)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
-I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B75BD02)
+I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B794C52)
 I (.\workspace\FreeRTOS\inc\projdefs.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\portable.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\deprecated_definitions.h)(0x5B75BD02)
@@ -139,7 +139,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BC994)
 I (.\workspace\FreeRTOS\inc\FreeRTOS.h)(0x5B75BD02)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588BC994)
-I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B75BD02)
+I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B794C52)
 I (.\workspace\FreeRTOS\inc\projdefs.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\portable.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\deprecated_definitions.h)(0x5B75BD02)
@@ -154,7 +154,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588BC994)
 I (.\workspace\FreeRTOS\inc\FreeRTOS.h)(0x5B75BD02)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588BC994)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
-I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B75BD02)
+I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B794C52)
 I (.\workspace\FreeRTOS\inc\projdefs.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\portable.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\deprecated_definitions.h)(0x5B75BD02)
@@ -169,7 +169,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588BC994)
 I (.\workspace\FreeRTOS\inc\FreeRTOS.h)(0x5B75BD02)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588BC994)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588BC994)
-I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B75BD02)
+I (.\workspace\Code\inc\FreeRTOSConfig.h)(0x5B794C52)
 I (.\workspace\FreeRTOS\inc\projdefs.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\portable.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\deprecated_definitions.h)(0x5B75BD02)
@@ -180,7 +180,7 @@ I (.\workspace\FreeRTOS\inc\list.h)(0x5B77F744)
 I (.\workspace\FreeRTOS\inc\queue.h)(0x5B75BD02)
 I (.\workspace\FreeRTOS\inc\timers.h)(0x5B75BD02)
 F (RTE\Device\STM32F446RETx\startup_stm32f446xx.s)(0x582313A8)(--cpu Cortex-M4.fp -g --apcs=interwork -I .\workspace\Startup-I.\RTE\_Neuro-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "STM32F446xx SETA 1"--list .\listings\startup_stm32f446xx.lst --xref -o .\objects\startup_stm32f446xx.o --depend .\objects\startup_stm32f446xx.d)
-F (RTE\Device\STM32F446RETx\system_stm32f4xx.c)(0x582313A8)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\workspace\Code\src -I .\workspace\Code\inc -I .\workspace\FreeRTOS\inc -I .\workspace\Startup-I.\RTE\_Neuro-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F446xx-o .\objects\system_stm32f4xx.o --omf_browse .\objects\system_stm32f4xx.crf --depend .\objects\system_stm32f4xx.d)
+F (RTE\Device\STM32F446RETx\system_stm32f4xx.c)(0x5B796EDA)(--c99 -c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I .\workspace\Code\src -I .\workspace\Code\inc -I .\workspace\FreeRTOS\inc -I .\workspace\Startup-I.\RTE\_Neuro-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32F446xx-o .\objects\system_stm32f4xx.o --omf_browse .\objects\system_stm32f4xx.crf --depend .\objects\system_stm32f4xx.d)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x582313A8)
 I (C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f446xx.h)(0x582313BA)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\core_cm4.h)(0x58988FDA)

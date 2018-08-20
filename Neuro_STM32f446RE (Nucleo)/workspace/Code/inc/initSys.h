@@ -4,6 +4,6 @@
 /********************************** Use Functions *******************************************/
 
 void InitRCC(void);
-//void genMCO(void);
+void genMCO2(void);
 void InitGPIO(void);
 void LedErOn (void);
