@@ -4,7 +4,7 @@ int main(void){
 	InitRCC();
 	genMCO2();
 	InitGPIO();
-	//InitUART();
+	InitUART();
 	//InitTIM2();
 
 	xTaskCreate(vTaskLed1,"LED1",32,NULL,1,NULL);
@@ -23,9 +23,12 @@ int main(void){
 void vTaskLed1 (void *argument){
 	while(1){
 		GPIOB->ODR |= GPIO_ODR_ODR_5;			//turn on led
-		vTaskDelay(3000);
+		vTaskDelay(500);
+		SendUSART1('1');
+
 		GPIOB->ODR &= ~GPIO_ODR_ODR_5;			//turn off led
-		vTaskDelay(3000);
+		vTaskDelay(500);
+		SendUSART1('0');
 	}
 }
 
@@ -34,13 +37,13 @@ void vTaskBut2 (void *argument){
 		uint8_t i = 0;
 		while((GPIOA->IDR & GPIO_IDR_IDR_0) != 0){
 			vTaskDelay(100);
-			SendStringUSART2("Button\r\n");
+			SendStringUSART1("Button\r\n");
 		}
 		vTaskDelay(100);
 		if(uxQueueMessagesWaiting(SendData) != 0){
 			xQueueReceive(SendData, &i, 0);
 		}
-		SendDataUSART2(i);
+		SendDataUSART1(i);
 		vTaskDelay(100);
 
 	}
