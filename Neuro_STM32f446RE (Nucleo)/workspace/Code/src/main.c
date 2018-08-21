@@ -22,9 +22,9 @@ int main(void){
 
 void vTaskLed1 (void *argument){
 	while(1){
-		GPIOB->ODR |= GPIO_ODR_ODR_5;			//turn on led 
+		GPIOB->ODR |= GPIO_ODR_ODR_5;			//turn on led
 		vTaskDelay(3000);
-		GPIOB->ODR &= ~GPIO_ODR_ODR_5;			//turn off led 
+		GPIOB->ODR &= ~GPIO_ODR_ODR_5;			//turn off led
 		vTaskDelay(3000);
 	}
 }
@@ -58,20 +58,20 @@ void vTaskTest (void *argument){
 //********************************* Interraptions *****************************************
 
 
-void USART2_IRQHandler(void){
-	if ((USART2->SR & USART_SR_RXNE) != 0){	//check about data on RX
-		USART2->SR &= ~USART_SR_RXNE;
+void USART1_IRQHandler(void){
+	if ((USART1->SR & USART_SR_RXNE) != 0){	//check about data on RX
+		USART1->SR &= ~USART_SR_RXNE;
 
-		if(USART2->DR == '0'){
-			SendUSART2('0');
-			SendUSART2('\n');
-			SendStringUSART2("OFF\r\n");
+		if(USART1->DR == '0'){
+			SendUSART1('0');
+			SendUSART1('\n');
+			SendStringUSART1("OFF\r\n");
 			GPIOD->ODR &= ~GPIO_ODR_ODR_15;			//turn off led blue
 		}
-		if(USART2->DR == '1'){
-			SendUSART2('1');
-			SendUSART2('\n');
-			SendStringUSART2("ON\r\n");
+		if(USART1->DR == '1'){
+			SendUSART1('1');
+			SendUSART1('\n');
+			SendStringUSART1("ON\r\n");
 			GPIOD->ODR |= GPIO_ODR_ODR_15;			//turn on led blue
 		}
 	}
