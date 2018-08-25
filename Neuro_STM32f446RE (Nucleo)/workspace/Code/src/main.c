@@ -1,5 +1,6 @@
 #include "main.h"
-
+int i = 0;//test
+int dir = 1;
 int main(void){
 	InitRCC();
 	genMCO2();
@@ -7,11 +8,11 @@ int main(void){
 	InitUART();
 	//InitTIM2();
 
-	xTaskCreate(vTaskLed1,"LED1",32,NULL,1,NULL);
-	//xTaskCreate(vTaskBut2,"BUT",32,NULL,1,NULL);
+	xTaskCreate(xTaskNextionHMI,"HMI",128,NULL,1,NULL);
+	xTaskCreate(xTaskConvADC,"ADC",128,NULL,2,NULL);
 	//xTaskCreate(vTaskTest,"Test",32,NULL,1,NULL);
 
-	SendData = xQueueCreate( 5, sizeof( uint8_t ) );
+	SendDataADC = xQueueCreate( 5, sizeof( uint16_t ) );
 
 	vTaskStartScheduler();								//planner
 
@@ -20,43 +21,75 @@ int main(void){
 
 //************************************* Tasks *********************************************
 
-void vTaskLed1 (void *argument){
-	while(1){
-		GPIOB->ODR |= GPIO_ODR_ODR_5;			//turn on led
-		vTaskDelay(500);
-		SendUSART1('1');
-
-		GPIOB->ODR &= ~GPIO_ODR_ODR_5;			//turn off led
-		vTaskDelay(500);
-		SendUSART1('0');
-	}
-}
-
-void vTaskBut2 (void *argument){
-	while(1){
-		uint8_t i = 0;
-		while((GPIOA->IDR & GPIO_IDR_IDR_0) != 0){
-			vTaskDelay(100);
-			SendStringUSART1("Button\r\n");
+void xTaskNextionHMI (void *argument){
+	uint16_t adcResult = 0;
+	char adcResultArr[3];
+//********************************* Set boud rate **************************************
+			SendStringUSART1("bauds=115200");
+			SendDataUSART1(0xFF);
+			SendDataUSART1(0xFF);
+			SendDataUSART1(0xFF);
+	
+	while(1)
+	{
+		if (uxQueueMessagesWaiting(SendDataADC) != 0)
+		{
+			xQueueReceive(SendDataADC, &adcResult, 0);							//Receive TaskConvADC
+			sprintf(adcResultArr,"%u",adcResult);								//from int to arr char
+//****************************** Send to graf a number **********************************
+			SendStringUSART1("Text1.txt=\"");
+			SendStringUSART1(adcResultArr);
+			SendStringUSART1("\"");
+			SendDataUSART1(0xFF);
+			SendDataUSART1(0xFF);
+			SendDataUSART1(0xFF);
+//****************************** Send to graf Voltage **********************************
+			SendStringUSART1("add 3,0,");
+			SendStringUSART1(adcResultArr);
+			SendDataUSART1(0xFF);
+			SendDataUSART1(0xFF);
+			SendDataUSART1(0xFF);	
+			
 		}
-		vTaskDelay(100);
-		if(uxQueueMessagesWaiting(SendData) != 0){
-			xQueueReceive(SendData, &i, 0);
-		}
-		SendDataUSART1(i);
-		vTaskDelay(100);
-
+		vTaskDelay(10);
 	}
 }
 
-void vTaskTest (void *argument){
-	uint8_t i = 30;
+void xTaskConvADC (void *argument){
+	uint16_t adcResult = 125;
+	char adcResultArr[3];
+
 	while(1){
-			xQueueSend(SendData, &i, 0);
-			i++;
-			vTaskDelay(200);
+		ADC1->CR2 |= ADC_CR2_SWSTART; //Запуск преобразований
+		//while (!(ADC1->SR & ADC_SR_EOC)); //ждем пока первое преобразование завершится
+		ADC1->SR = 0;
+		//adcResult = ADC1->DR;
+//****************************** Test Signal to HMI **********************************
+
+		adcResult=i;
+		if(i>250)
+		{dir=0;}
+		if(i<5)
+		{dir=1;}
+		if(dir==1)
+		{i+=3;}
+		if(dir==0)
+		{i-=3;}
+		
+
+		xQueueSend(SendDataADC, &adcResult, 0);		//Send adcResult to TaskNexionHMI
+		
+		GPIOA->ODR ^= GPIO_ODR_ODR_5;			//turn on green led
+		
+
+		
+		vTaskDelay(10);
+
+
 	}
 }
+
+
 
 //********************************* Interraptions *****************************************
 

@@ -4,6 +4,7 @@
 ".\objects\libpwm.o"
 ".\objects\libuart.o"
 ".\objects\main.o"
+".\objects\libadc.o"
 ".\objects\croutine.o"
 ".\objects\event_groups.o"
 ".\objects\heap_1.o"

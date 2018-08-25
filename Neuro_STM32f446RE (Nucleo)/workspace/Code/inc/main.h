@@ -8,8 +8,9 @@
 #include "libUART.h"
 #include "libPWM.h"
 #include "libLCD.h"
+#include "libADC.h"
 /************************************* Defines **********************************************/
-xQueueHandle SendData;
-void vTaskLed1 (void *argument);
-void vTaskBut2 (void *argument);
+xQueueHandle SendDataADC;
+void xTaskNextionHMI (void *argument);
+void xTaskConvADC (void *argument);
 void vTaskTest (void *argument);

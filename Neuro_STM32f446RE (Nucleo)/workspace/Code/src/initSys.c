@@ -66,14 +66,21 @@ void genMCO2(void){ //PA8
 }
 
 void InitGPIO (void){
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;												//Turn on clock on AHB1 to GPIOB
-
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN |												//Turn on clock on AHB1 to GPIOB & A
+					RCC_AHB1ENR_GPIOAEN;
 	GPIOB->MODER &= ~GPIO_MODER_MODER5;													//clean moder PB5
 	GPIOB->MODER |= GPIO_MODER_MODER5_0;												//PB5 PP GP output
 	GPIOB->PUPDR &= ~GPIO_PUPDR_PUPDR5;
 	GPIOB->OTYPER &= ~GPIO_OTYPER_OT_5;
 	GPIOB->OSPEEDR|= GPIO_OSPEEDER_OSPEEDR5;											//very high speed
-}
+	
+	GPIOA->MODER &= ~GPIO_MODER_MODER5;
+	GPIOA->MODER |= GPIO_MODER_MODER5_0;												//PA5 PP GP output
+	GPIOA->PUPDR &= ~GPIO_PUPDR_PUPDR5;
+	GPIOA->OTYPER &= ~GPIO_OTYPER_OT_5;
+	GPIOA->OSPEEDR|= GPIO_OSPEEDER_OSPEEDR5;											//very high speed
+}	
+
 void LedErOn (void){
 	GPIOD->ODR = GPIO_ODR_ODR_14;														//turn on led red
 }

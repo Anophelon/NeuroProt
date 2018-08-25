@@ -12,8 +12,10 @@ void InitUART(void){
 	GPIOA->PUPDR 		|= GPIO_PUPDR_PUPDR9_0 | GPIO_PUPDR_PUPDR10_0;       //PUPDR 01
 	GPIOA->AFR[1] 	|= 0x00000770;																			//PA9,PA10 - AF7
 
-	//USART1->BRR =(APB1CLK+BAUDRATE/2)/BAUDRATE => (60 000 000 + 4800) /9600 = 0x186A Exp:27AC
-	USART1->BRR 		= 0x186A;											// (f(APB1)+ 4800)/9600, f(APB1) == 42 MHz
+	//USART1->BRR =(APB1CLK+BAUDRATE/2)/BAUDRATE => (60 000 000 + 4800) /9600 = 0x186A 
+	//BRR=0x209 for br=115200 
+	//BRR=0x412 for br=57600 
+	USART1->BRR		  = 0x209;									
 	USART1->CR1 	 |= USART_CR1_UE | 							//Enable USART1
 								 		USART_CR1_TE | 							//Transmitter USART1
 								 		USART_CR1_RE |							//Resiver USART1
