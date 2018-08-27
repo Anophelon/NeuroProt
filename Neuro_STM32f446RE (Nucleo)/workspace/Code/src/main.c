@@ -8,6 +8,7 @@ int main(void)
 	InitGPIO();
 	InitUART();
 	//InitTIM2();
+	InitADC();
 
 	xTaskCreate(xTaskNextionHMI,"HMI",128,NULL,1,NULL);
 	xTaskCreate(xTaskConvADC,"ADC",128,NULL,2,NULL);
@@ -64,8 +65,8 @@ void xTaskConvADC (void *argument)
 
 	while(1)
 	{	
-		adcResult = StartConvADC();
-		
+		adcResult = StartConvADC();		//max = 0xFFFF = 4095
+		adcResult /= 16;				//max = 0xFF   = 255
 		/*
          ADC1->CR2 |= ADC_CR2_JSWSTART; //Запуск преобразований
          //while (!(ADC1->SR & ADC_SR_JEOC)); //ждем пока первое преобразование завершится
@@ -90,7 +91,7 @@ void xTaskConvADC (void *argument)
 	
 		GPIOA->ODR ^= GPIO_ODR_ODR_5;			//turn on green led
 		
-		vTaskDelay(100);
+		vTaskDelay(10);
 
 
 	}
