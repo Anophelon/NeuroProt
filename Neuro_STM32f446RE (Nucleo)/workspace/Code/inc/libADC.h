@@ -4,3 +4,4 @@
 /********************************** Use Functions *******************************************/
 
 void InitADC (void);
+uint16_t StartConvADC (void);

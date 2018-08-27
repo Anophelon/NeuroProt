@@ -1,7 +1,8 @@
 #include "main.h"
 int i = 0;//test
 int dir = 1;
-int main(void){
+int main(void)
+{
 	InitRCC();
 	genMCO2();
 	InitGPIO();
@@ -21,7 +22,8 @@ int main(void){
 
 //************************************* Tasks *********************************************
 
-void xTaskNextionHMI (void *argument){
+void xTaskNextionHMI (void *argument)
+{
 	uint16_t adcResult = 0;
 	char adcResultArr[3];
 //********************************* Set boud rate **************************************
@@ -55,17 +57,23 @@ void xTaskNextionHMI (void *argument){
 	}
 }
 
-void xTaskConvADC (void *argument){
+void xTaskConvADC (void *argument)
+{
 	uint16_t adcResult = 125;
 	char adcResultArr[3];
 
-	while(1){
-		ADC1->CR2 |= ADC_CR2_SWSTART; //Запуск преобразований
-		//while (!(ADC1->SR & ADC_SR_EOC)); //ждем пока первое преобразование завершится
-		ADC1->SR = 0;
-		//adcResult = ADC1->DR;
+	while(1)
+	{	
+		adcResult = StartConvADC();
+		
+		/*
+         ADC1->CR2 |= ADC_CR2_JSWSTART; //Запуск преобразований
+         //while (!(ADC1->SR & ADC_SR_JEOC)); //ждем пока первое преобразование завершится
+         ADC1->SR = 0;
+         adcResult = ADC1->JDR1;
+		*/
 //****************************** Test Signal to HMI **********************************
-
+		/*
 		adcResult=i;
 		if(i>250)
 		{dir=0;}
@@ -75,15 +83,14 @@ void xTaskConvADC (void *argument){
 		{i+=3;}
 		if(dir==0)
 		{i-=3;}
+		*/
 		
-
+		
 		xQueueSend(SendDataADC, &adcResult, 0);		//Send adcResult to TaskNexionHMI
-		
+	
 		GPIOA->ODR ^= GPIO_ODR_ODR_5;			//turn on green led
 		
-
-		
-		vTaskDelay(10);
+		vTaskDelay(100);
 
 
 	}
@@ -94,17 +101,21 @@ void xTaskConvADC (void *argument){
 //********************************* Interraptions *****************************************
 
 
-void USART1_IRQHandler(void){
-	if ((USART1->SR & USART_SR_RXNE) != 0){	//check about data on RX
+void USART1_IRQHandler(void)
+{
+	if ((USART1->SR & USART_SR_RXNE) != 0)
+	{	//check about data on RX
 		USART1->SR &= ~USART_SR_RXNE;
 
-		if(USART1->DR == '0'){
+		if(USART1->DR == '0')
+		{
 			SendUSART1('0');
 			SendUSART1('\n');
 			SendStringUSART1("OFF\r\n");
 			GPIOD->ODR &= ~GPIO_ODR_ODR_15;			//turn off led blue
 		}
-		if(USART1->DR == '1'){
+		if(USART1->DR == '1')
+		{
 			SendUSART1('1');
 			SendUSART1('\n');
 			SendStringUSART1("ON\r\n");
