@@ -93,7 +93,7 @@ void MainWindow::setupGraph()
     ui->customPlot->addGraph();
     ui->customPlot->xAxis->setRange(0, 100);
     ui->customPlot->yAxis->setRange(0, 256);
-    ui->customPlot->xAxis->setLabel("time,s");
+    //ui->customPlot->xAxis->setLabel("time,s");
     ui->customPlot->yAxis->setLabel("Voltage,V");
     ui->customPlot->show();
     ui->customPlot->setInteraction(QCP::iRangeZoom,true);   // Включаем взаимодействие удаления/приближения
@@ -112,7 +112,7 @@ void MainWindow::setupGraph()
     ui->customPlot_2->addGraph();
     ui->customPlot_2->xAxis->setRange(0, 100);
     ui->customPlot_2->yAxis->setRange(0, 256);
-    ui->customPlot_2->xAxis->setLabel("time,s");
+    //ui->customPlot_2->xAxis->setLabel("time,s");
     ui->customPlot_2->yAxis->setLabel("Voltage,V");
     ui->customPlot_2->show();
     ui->customPlot_2->setInteraction(QCP::iRangeZoom,true);   // Включаем взаимодействие удаления/приближения
@@ -127,7 +127,7 @@ void MainWindow::setupGraph()
     ui->customPlot_3->addGraph();
     ui->customPlot_3->xAxis->setRange(0, 100);
     ui->customPlot_3->yAxis->setRange(0, 256);
-    ui->customPlot_3->xAxis->setLabel("time,s");
+    //ui->customPlot_3->xAxis->setLabel("time,s");
     ui->customPlot_3->yAxis->setLabel("Voltage,V");
     ui->customPlot_3->show();
     ui->customPlot_3->setInteraction(QCP::iRangeZoom,true);   // Включаем взаимодействие удаления/приближения
@@ -173,7 +173,7 @@ void MainWindow::on_pushButton_2_clicked()
           serial->setPortName(ui->comboBox->currentText());
     }
     //setup COM port
-    serial->setBaudRate(QSerialPort::Baud9600);
+    serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);
     serial->setStopBits(QSerialPort::OneStop);
@@ -199,6 +199,8 @@ void MainWindow::on_pushButton_3_clicked()
 /*************************************** Clean TextBrowse ********************************************/
 void MainWindow::on_pushButton_5_clicked()
 {
+    disconnect(serial,SIGNAL(readyRead()),this,SLOT(serialReceived()));
+
     ui->textBrowser->clear();
     ui->textBrowser->clear();
     ui->textBrowser->clear();
