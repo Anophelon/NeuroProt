@@ -16,8 +16,8 @@ void InitRCC(void){
 	//while (!(FLASH->ACR & FLASH_ACR_LATENCY)){}
 
 	FLASH->ACR |= FLASH_ACR_PRFTEN 		|
-				  FLASH_ACR_LATENCY_3WS |
-				  FLASH_ACR_ICEN   	 	|
+				  FLASH_ACR_LATENCY_3WS 		|
+				  FLASH_ACR_ICEN   	 				|
 				  FLASH_ACR_DCEN;														// Cloclk Flash memory
 	//while (!(FLASH->ACR & FLASH_ACR_LATENCY_3WS)){}
 
@@ -39,7 +39,7 @@ void InitRCC(void){
 	RCC->PLLCFGR |= RCC_PLLCFGR_PLLSRC_HSI | 												// source HSI = 16MHz
 				 RCC_PLLCFGR_PLLM_3 	| 												// DIV_M: source HSI/8 = 2 MHz 11111000
 				 RCC_PLLCFGR_PLLN_3		|												// clock = 2 MHz * 120 = 240 MHz
-				 RCC_PLLCFGR_PLLN_4		|	
+				 RCC_PLLCFGR_PLLN_4		|
 				 RCC_PLLCFGR_PLLN_5		|
 				 RCC_PLLCFGR_PLLN_6		|
 				 RCC_PLLCFGR_PLLR_1;													// unused in this project
@@ -73,14 +73,23 @@ void InitGPIO (void){
 	GPIOB->PUPDR &= ~GPIO_PUPDR_PUPDR5;
 	GPIOB->OTYPER &= ~GPIO_OTYPER_OT_5;
 	GPIOB->OSPEEDR|= GPIO_OSPEEDER_OSPEEDR5;											//very high speed
-	
+
 	GPIOA->MODER &= ~GPIO_MODER_MODER5;
 	GPIOA->MODER |= GPIO_MODER_MODER5_0;												//PA5 PP GP output
 	GPIOA->PUPDR &= ~GPIO_PUPDR_PUPDR5;
 	GPIOA->OTYPER &= ~GPIO_OTYPER_OT_5;
 	GPIOA->OSPEEDR|= GPIO_OSPEEDER_OSPEEDR5;											//very high speed
-}	
+}
 
+void InitTIM4 (void){
+	RCC->APB1ENR |= RCC_AHB1ENR_TIM4EN;										//Enable TIM4
+	//PSC = 1
+	TIM4->ARR |= 60000000;																			//30Mhz/60k = 500Hz
+	TIM4->DIER |= TIM_DIER_UIE;																	//Interrupt enable
+	TIM4->CR1 |= TIM_CR1_CEN;																		//Counter enabled
+
+	NVIC_EnableIRQ(TIM4_IRQn);																	//Interrupt
+}
 void LedErOn (void){
 	GPIOD->ODR = GPIO_ODR_ODR_14;														//turn on led red
 }

@@ -14,3 +14,4 @@ xQueueHandle SendDataADC;
 void xTaskNextionHMI (void *argument);
 void xTaskConvADC (void *argument);
 void vTaskTest (void *argument);
+void TIM4_IRQHandler(void);

@@ -18,5 +18,4 @@ void InitTIM2(void){//PA1 ch2
 	TIM2->CCER 	&= ~TIM_CCER_CC2P;
 	TIM2->CR1		&= ~TIM_CR1_DIR;
 	TIM2->CR1		|= TIM_CR1_CEN;
-
 }
