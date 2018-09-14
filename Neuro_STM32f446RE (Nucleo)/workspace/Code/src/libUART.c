@@ -44,12 +44,12 @@ void SendDataUSART1 (uint8_t data){
 }
 /************************************** DMA *************************************************/
 
-void InitDMAuart (void)
+void InitDMAuart (char *arr)
 {
 	RCC->AHB1ENR |= RCC_AHB1ENR_DMA2EN;
 
 	DMA2_Stream7->PAR = (uint32_t)&USART1->DR;	//sent to USART1
-	DMA2_Stream7->M0AR = (uint32_t)buffer;			//source
+	DMA2_Stream7->M0AR =(uint32_t)arr;			//source
 	DMA2_Stream7->NDTR = 5;											//number of data register
 	DMA2_Stream7->CR |= DMA_SxCR_CHSEL_2				//channel 4
 									 |	DMA_SxCR_DIR_0					//memory to peripheral
