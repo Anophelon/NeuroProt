@@ -42,6 +42,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::serialReceived()
 {
+    /*
     QByteArray dataCOM;
     int ch[4] = {0,0,0,0};
     dataCOM = serial->readLine();
@@ -80,11 +81,59 @@ void MainWindow::serialReceived()
          //Simulate delay
          // std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
+        */
+    QByteArray dataCOM;
+    int ch[4] = {0,0,0,0};
+    //char symb;
+    int srchCnt = 0;
+    int pntCnt = 0;
+
+        //while( ( serial->canReadLine() ) != true){}
+        dataCOM = serial->readLine();
+        qDebug() << "dataCOM[0] = " << dataCOM[0];
+
+        if (dataCOM[0]=='a')
+        {
+            qDebug() << "srchCnt = " << srchCnt;
+            srchCnt = 0;
+            pntCnt++;
+            qDebug() << "to graph";
+            ch[0] =  (uint8_t)dataCOM[1];
+            qDebug() << "ch[0] = " << ch[0];
+
+            ch[1] = (uint8_t)dataCOM[2];
+            qDebug() << "ch[1] = " << ch[1];
+
+            ch[2] = (uint8_t)dataCOM[3];
+            qDebug() << "ch[2] = " << ch[2];
+
+            ch[3] = (uint8_t)dataCOM[4];
+            qDebug() << "ch[3] = " << ch[3];
+
+
+                ui->customPlot->graph(0)->addData(timer, ch[0]);
+                ui->customPlot_2->graph(0)->addData(timer, ch[1]);
+                ui->customPlot_3->graph(0)->addData(timer, ch[2]);
+                ui->customPlot_4->graph(0)->addData(timer, ch[3]);
+
+
+                timer++;
+
+         }
+         else {timer++;srchCnt++;}
+         // ui->textBrowser->insertPlainText(dataCOM);
+    if ( timer%50 == 0 ){
+    ui->customPlot->xAxis->setRange(0, timer);
+    ui->customPlot_2->xAxis->setRange(0, timer);
+    ui->customPlot_3->xAxis->setRange(0, timer);
+    ui->customPlot_4->xAxis->setRange(0, timer);
+
+    ui->customPlot->replot();
+    ui->customPlot_2->replot();
+    ui->customPlot_3->replot();
+    ui->customPlot_4->replot();
+    qDebug() << "pntCnt = " << pntCnt;
     }
-    qDebug() <<ch[0];
-    qDebug() <<ch[1];
-    qDebug() <<ch[2];
-    qDebug() <<ch[3];
 
 
 }
@@ -184,8 +233,9 @@ void MainWindow::on_pushButton_2_clicked()
 /**************************************** Button Get *************************************************/
 void MainWindow::on_pushButton_4_clicked()
 {
-    connect(serial,SIGNAL(readyRead()),this,SLOT(serialReceived()));
+    connect(serial,SIGNAL(readyRead()),this,SLOT(serialReceived()));    
     setupGraph();
+    serial->clear();
 
 }
 
