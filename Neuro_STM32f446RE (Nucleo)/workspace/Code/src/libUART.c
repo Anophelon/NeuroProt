@@ -16,7 +16,11 @@ void InitUART(void){
 	//USART1->BRR =(APB1CLK+BAUDRATE/2)/BAUDRATE => (60 000 000 + 4800) /9600 = 0x186A
 	//BRR=0x209 for br=115200
 	//BRR=0x412 for br=57600
-	USART1->BRR		  = 0x209;
+	//BRR=0x82 for br=460800
+	//BRR=0x41 for br=921600
+
+	//
+	USART1->BRR		  = 0x41;
 	USART1->CR1 	 |= USART_CR1_UE | 							//Enable USART1
 								 		USART_CR1_TE | 							//Transmitter USART1
 								 		USART_CR1_RE |							//Resiver USART1
@@ -50,13 +54,21 @@ void InitDMAuart (char *arr)
 
 	DMA2_Stream7->PAR = (uint32_t)&USART1->DR;	//sent to USART1
 	DMA2_Stream7->M0AR =(uint32_t)arr;			//source
-	DMA2_Stream7->NDTR = 5;											//number of data register
+	DMA2_Stream7->NDTR = 7;											//number of data register
 	DMA2_Stream7->CR |= DMA_SxCR_CHSEL_2				//channel 4
 									 |	DMA_SxCR_DIR_0					//memory to peripheral
-									 |	DMA_SxCR_CIRC						//circular mode
+									 						//circular mode |	DMA_SxCR_CIRC
 									 |	DMA_SxCR_MINC;					//memory increment
 
 
 	DMA2_Stream7->CR |= DMA_SxCR_EN;						//stream enable
+	USART1->CR3 |= USART_CR3_DMAT;
 
+}
+void WriteDMAusart1 (char *arr)
+{
+	DMA2_Stream7->CR &= ~DMA_SxCR_EN;
+	DMA2_Stream7->NDTR = sizeof(arr)-1;
+	DMA2->HIFCR |= DMA_HIFCR_CTCIF7;
+	DMA2_Stream7->CR |= DMA_SxCR_EN;
 }

@@ -1,7 +1,7 @@
 #include "main.h"
 int i = 0;//test
 int dir = 1;
-	uint8_t buffer[5] = {1,1,1,1,1};
+uint8_t buffer[7] = {'a',1,1,1,1,'\"','n'};
 
 int main(void)
 {
@@ -11,7 +11,7 @@ int main(void)
 	InitUART();
 	//InitTIM2();
 	InitADC();
-	//InitDMAuart(buffer);
+	InitDMAuart(buffer);
 	InitTIM4();
 
 	//xTaskCreate(xTaskNextionHMI,"HMI",128,NULL,1,NULL);
@@ -57,7 +57,6 @@ void xTaskNextionHMI (void *argument)
 			SendDataUSART1(0xFF);
 			SendDataUSART1(0xFF);
 			SendDataUSART1(0xFF);
-
 		}
 		vTaskDelay(10);
 	}
@@ -97,8 +96,6 @@ void xTaskConvADC (void *argument)
 		GPIOA->ODR ^= GPIO_ODR_ODR_5;			//turn on green led
 
 		vTaskDelay(10);
-
-
 	}
 }
 void vTaskTest (void *argument)
@@ -106,7 +103,6 @@ void vTaskTest (void *argument)
 	while(1)
 	{
 	
-
 
 	}
 	
@@ -123,9 +119,7 @@ void vTaskTest2 (void *argument)
 		//GPIOB->ODR &= ~GPIO_ODR_ODR_5;			//turn on led blue
 
 		vTaskDelay(500);
-
 	}
-	
 }
 
 //********************************* Interraptions *****************************************
@@ -133,33 +127,17 @@ void vTaskTest2 (void *argument)
 void TIM4_IRQHandler(void)
 {
 	TIM4->SR &= ~TIM_SR_UIF;
-	GPIOA->ODR |= GPIO_ODR_ODR_5;			//turn on led blue
+	GPIOA->ODR |= GPIO_ODR_ODR_5;			//turn on led green
 	ADC1->CR2 |= ADC_CR2_JSWSTART;												// Start conversion
 
 
-	buffer[0] = 'a';
 	buffer[1] = (uint8_t)(ADC1->JDR1/16); // CH0
-	if(buffer[1] == 'a'){buffer[1]++;}
-
 	buffer[2] = (uint8_t)(ADC1->JDR2/16); // CH1
-	if(buffer[2] == 'a'){buffer[2]++;}
-
 	buffer[3] = (uint8_t)(ADC1->JDR3/16); // CH4
-	if(buffer[3] == 'a'){buffer[3]++;}
-
 	buffer[4] = (uint8_t)(ADC1->JDR4/16); // CH6
-	if(buffer[4] == 'a'){buffer[4]++;}
 	
-	SendDataUSART1(buffer[0]); 
-	SendDataUSART1(buffer[1]);
-	SendDataUSART1(buffer[2]); 
-	SendDataUSART1(buffer[3]); 
-	SendDataUSART1(buffer[4]); 
-	
-	SendUSART1('\n');
+	WriteDMAusart1(buffer);
 
-
-	
 	GPIOA->ODR &= ~GPIO_ODR_ODR_5;
 }
 void USART1_IRQHandler(void)
