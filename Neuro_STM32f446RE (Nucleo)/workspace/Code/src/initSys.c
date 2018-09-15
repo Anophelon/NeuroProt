@@ -54,7 +54,7 @@ void InitRCC(void){
 
 void genMCO2(void){ //PA8
 	RCC->CFGR &= ~RCC_CFGR_MCO2;														//MCO2 take clock from SYSCLK
-  RCC->CFGR &= ~RCC_CFGR_MCO2PRE;
+	RCC->CFGR &= ~RCC_CFGR_MCO2PRE;
 	RCC->CFGR |=  RCC_CFGR_MCO2PRE_1 | RCC_CFGR_MCO2PRE_2;								//Div = 4 (120/4=30Mhz)
 
 	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;												//Turn on clock on AHB1 to GPIOA
@@ -82,9 +82,10 @@ void InitGPIO (void){
 }
 
 void InitTIM4 (void){
-	RCC->APB1ENR |= RCC_AHB1ENR_TIM4EN;										//Enable TIM4
+	RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;										//Enable TIM4
 	//PSC = 1
-	TIM4->ARR |= 60000000;																			//30Mhz/60k = 500Hz
+	TIM4->PSC = 30000 - 1;
+	TIM4->ARR = 25;																			//30Mhz/60k = 500Hz
 	TIM4->DIER |= TIM_DIER_UIE;																	//Interrupt enable
 	TIM4->CR1 |= TIM_CR1_CEN;																		//Counter enabled
 

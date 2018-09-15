@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QTime>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 #include "qcustomplot.h"
@@ -22,12 +23,15 @@ public:
 private slots:
     void serialReceived();
 
+
 private:
     Ui::MainWindow *ui;
     QSerialPort *serial;
     QCustomPlot *customPlot;
     QCPGraph *graphic;
-    QTimer timer_plot;
+    QTimer *rtimer;
+
+
 
 public slots:
     void on_pushButton_clicked();

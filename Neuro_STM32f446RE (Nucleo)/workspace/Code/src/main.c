@@ -1,8 +1,7 @@
 #include "main.h"
-
 int i = 0;//test
 int dir = 1;
-char buffer[4] = {0,0,0,0,0};
+	uint8_t buffer[5] = {1,1,1,1,1};
 
 int main(void)
 {
@@ -12,17 +11,18 @@ int main(void)
 	InitUART();
 	//InitTIM2();
 	InitADC();
-	InitDMAuart();
+	//InitDMAuart(buffer);
 	InitTIM4();
 
-	xTaskCreate(xTaskNextionHMI,"HMI",128,NULL,1,NULL);
-	xTaskCreate(xTaskConvADC,"ADC",128,NULL,2,NULL);
-	xTaskCreate(vTaskDMAuart,"Test",32,NULL,1,NULL);
+	//xTaskCreate(xTaskNextionHMI,"HMI",128,NULL,1,NULL);
+	//xTaskCreate(xTaskConvADC,"ADC",128,NULL,2,NULL);
+	//xTaskCreate(vTaskTest,"Test",32,NULL,1,NULL);
+	xTaskCreate(vTaskTest2,"Test",32,NULL,1,NULL);
 
 	SendDataADC = xQueueCreate( 5, sizeof( uint16_t ) );
 
 	vTaskStartScheduler();								//planner
-
+	//while(1);
 	while(1)LedErOn();
 }
 
@@ -101,28 +101,66 @@ void xTaskConvADC (void *argument)
 
 	}
 }
-void xTaskDMAuart (void *argument)
+void vTaskTest (void *argument)
 {
+	while(1)
+	{
+	
 
+
+	}
+	
 }
+void vTaskTest2 (void *argument)
+{
+	while(1)
+	{
+		GPIOB->ODR |= GPIO_ODR_ODR_5;			//turn on led blue
+		//GPIOB->ODR |= GPIO_ODR_ODR_5;			//turn on led blue
 
+		vTaskDelay(500);
+		GPIOB->ODR &= ~GPIO_ODR_ODR_5;			//turn on led blue
+		//GPIOB->ODR &= ~GPIO_ODR_ODR_5;			//turn on led blue
+
+		vTaskDelay(500);
+
+	}
+	
+}
 
 //********************************* Interraptions *****************************************
 
 void TIM4_IRQHandler(void)
 {
-	buffer[0] = 0;
-	buffer[1] = ADC1->JDR1; // CH0
-	if(buffer[1] == 0){buffer[1]++};
+	TIM4->SR &= ~TIM_SR_UIF;
+	GPIOA->ODR |= GPIO_ODR_ODR_5;			//turn on led blue
+	ADC1->CR2 |= ADC_CR2_JSWSTART;												// Start conversion
 
-	buffer[2] = ADC1->JDR2; // CH1
-	if(buffer[2] == 0){buffer[2]++};
 
-	buffer[3] = ADC1->JDR3; // CH4
-	if(buffer[3] == 0){buffer[3]++};
+	buffer[0] = 'a';
+	buffer[1] = (uint8_t)(ADC1->JDR1/16); // CH0
+	if(buffer[1] == 'a'){buffer[1]++;}
 
-	buffer[4] = ADC1->JDR4; // CH6
-	if(buffer[4] == 0){buffer[4]++};
+	buffer[2] = (uint8_t)(ADC1->JDR2/16); // CH1
+	if(buffer[2] == 'a'){buffer[2]++;}
+
+	buffer[3] = (uint8_t)(ADC1->JDR3/16); // CH4
+	if(buffer[3] == 'a'){buffer[3]++;}
+
+	buffer[4] = (uint8_t)(ADC1->JDR4/16); // CH6
+	if(buffer[4] == 'a'){buffer[4]++;}
+	
+	SendDataUSART1(buffer[0]); 
+	SendDataUSART1(buffer[1]);
+	SendDataUSART1(buffer[2]); 
+	SendDataUSART1(buffer[3]); 
+	SendDataUSART1(buffer[4]); 
+	
+	SendUSART1('\n');
+
+
+	
+	GPIOA->ODR &= ~GPIO_ODR_ODR_5;
 }
 void USART1_IRQHandler(void)
 {
