@@ -54,7 +54,7 @@ void InitDMAuart (char *arr)
 
 	DMA2_Stream7->PAR = (uint32_t)&USART1->DR;	//sent to USART1
 	DMA2_Stream7->M0AR =(uint32_t)arr;			//source
-	DMA2_Stream7->NDTR = 7;											//number of data register
+	DMA2_Stream7->NDTR = 5;											//number of data register
 	DMA2_Stream7->CR |= DMA_SxCR_CHSEL_2				//channel 4
 									 |	DMA_SxCR_DIR_0					//memory to peripheral
 									 						//circular mode |	DMA_SxCR_CIRC
@@ -68,7 +68,7 @@ void InitDMAuart (char *arr)
 void WriteDMAusart1 (char *arr)
 {
 	DMA2_Stream7->CR &= ~DMA_SxCR_EN;
-	DMA2_Stream7->NDTR = sizeof(arr)-1;
+	DMA2_Stream7->NDTR = 5;
 	DMA2->HIFCR |= DMA_HIFCR_CTCIF7;
 	DMA2_Stream7->CR |= DMA_SxCR_EN;
 }

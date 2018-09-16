@@ -26,21 +26,22 @@ void InitADC (void){ //PA0 - input ADC1 IN0
 	ADC->CCR	 |= ADC_CCR_ADCPRE_1; 											//Presc = 6 => ADC 10Mhz
 
 	//Sample time 480 cycles
+		
 	ADC1->SMPR2  |= (ADC_SMPR2_SMP0_2| ADC_SMPR2_SMP0_1 | ADC_SMPR2_SMP0_0)
 				 | 	(ADC_SMPR2_SMP0_2| ADC_SMPR2_SMP1_1 | ADC_SMPR2_SMP1_0)
 				 |	(ADC_SMPR2_SMP0_2| ADC_SMPR2_SMP4_1 | ADC_SMPR2_SMP4_0)
 				 |	(ADC_SMPR2_SMP0_2| ADC_SMPR2_SMP6_1 | ADC_SMPR2_SMP6_0);
-	/*			 
+		/* 
 	ADC1->SMPR2  |= ( ADC_SMPR2_SMP0_0)
 				 | 	( ADC_SMPR2_SMP1_0)
 				 |	 (ADC_SMPR2_SMP4_0)
 				 |	( ADC_SMPR2_SMP6_0);
-*/
+*/	
 	ADC1->CR2 	|= ADC_CR2_JEXTEN;
 	ADC1->CR2 	|= ADC_CR2_CONT; 												//Continuous conversion mode
 	ADC1->CR2 	|= ADC_CR2_JEXTSEL;
 	ADC1->CR1 	|= ADC_CR1_SCAN;												//Scan mode
-
+	ADC1->CR1 	|= ADC_CR1_RES_1;
 	//ADC1->CR1 	|= ADC_CR1_JAUTO;
 
 	ADC1->JSQR = ADC_JSQR_JL;

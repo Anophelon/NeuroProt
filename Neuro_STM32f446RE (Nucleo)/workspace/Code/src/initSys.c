@@ -85,7 +85,7 @@ void InitTIM4 (void){
 	RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;										//Enable TIM4
 	//PSC = 1
 	TIM4->PSC = 30000 - 1;
-	TIM4->ARR = 25;																			//30Mhz/60k = 500Hz
+	TIM4->ARR = 1;																			//30Mhz/60k = 500Hz
 	TIM4->DIER |= TIM_DIER_UIE;																	//Interrupt enable
 	TIM4->CR1 |= TIM_CR1_CEN;																		//Counter enabled
 

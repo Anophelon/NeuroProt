@@ -1,7 +1,7 @@
 #include "main.h"
 int i = 0;//test
 int dir = 1;
-uint8_t buffer[7] = {'a',1,1,1,1,'\"','n'};
+uint8_t buffer[5] = {'a',1,1,1,1};
 
 int main(void)
 {
@@ -102,7 +102,7 @@ void vTaskTest (void *argument)
 {
 	while(1)
 	{
-	
+		
 
 	}
 	
@@ -129,15 +129,20 @@ void TIM4_IRQHandler(void)
 	TIM4->SR &= ~TIM_SR_UIF;
 	GPIOA->ODR |= GPIO_ODR_ODR_5;			//turn on led green
 	ADC1->CR2 |= ADC_CR2_JSWSTART;												// Start conversion
+	while (!(ADC1->SR & ADC_SR_JEOC));
 
-
-	buffer[1] = (uint8_t)(ADC1->JDR1/16); // CH0
-	buffer[2] = (uint8_t)(ADC1->JDR2/16); // CH1
-	buffer[3] = (uint8_t)(ADC1->JDR3/16); // CH4
-	buffer[4] = (uint8_t)(ADC1->JDR4/16); // CH6
-	
+	buffer[1] = (uint8_t)(ADC1->JDR1); // CH0
+	buffer[2] = (uint8_t)(ADC1->JDR2); // CH1
+	buffer[3] = (uint8_t)(ADC1->JDR3); // CH4
+	buffer[4] = (uint8_t)(ADC1->JDR4); // CH6
+	for(int i = 1; i < 5; i++){
+		if( buffer[i]=='a'){
+			buffer[i]++;
+		}
+	}
 	WriteDMAusart1(buffer);
-
+	//SendStringUSART1(buffer);
+	
 	GPIOA->ODR &= ~GPIO_ODR_ODR_5;
 }
 void USART1_IRQHandler(void)
