@@ -10,7 +10,7 @@
 #include <QDataStream>
 #include <QDebug>
 
-#define LENGHT 1024
+#define LENGHT 6700
 /****************** ATTENTION    *******************/
 /*     ASCII FORM FOR UART "155 255 123 012\r\n"        */
 /*     HEX FORM FOR UART "'a'0xff0xff0xff0xff\n"        */
@@ -21,7 +21,7 @@ QVector<double> dataCh1(LENGHT);
 QVector<double> dataCh2(LENGHT);
 QVector<double> dataCh3(LENGHT);
 QVector<double> dataCh4(LENGHT);
-int timCount = 0;
+unsigned int timCount = 0;
 /******************************************** Main ***************************************************/
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,10 +35,10 @@ MainWindow::MainWindow(QWidget *parent) :
     customPlot = new QCustomPlot();
     for(int i = 0; i < LENGHT; i++){
         timer[i] = i+1;
-        dataCh1[i] = 10;
-        dataCh2[i] = 10;
-        dataCh3[i] = 10;
-        dataCh4[i] = 10;
+        dataCh1[i] = 0;
+        dataCh2[i] = 0;
+        dataCh3[i] = 0;
+        dataCh4[i] = 0;
     }
     setupGraph();
 
@@ -51,8 +51,8 @@ MainWindow::~MainWindow()
     serial->close();
 }
 
-void MainWindow::serialReceived()
-{   //ASCII
+void MainWindow::serialReceived(){
+    //ASCII
     /*
     QByteArray dataCOM;
     int ch[4] = {0,0,0,0};
@@ -146,25 +146,42 @@ void MainWindow::serialReceived()
     }
 */
     QByteArray dataCOM;
-    dataCOM = serial->readLine();
-    qDebug() << "sizeof(dataCOM) = " << sizeof(dataCOM);
-    qDebug() << "dataCOM[0] = " << dataCOM[0];
-    qDebug() << "dataCOM = " << (uint8_t)dataCOM[1] << " " << (uint8_t)dataCOM[2]
-             << " " << (uint8_t)dataCOM[3] << " " << (uint8_t)dataCOM[4];
-    if(1||dataCOM[0] == 'a'){
-        dataCh1[timCount] = (uint8_t)dataCOM[1];
-        dataCh2[timCount] = (uint8_t)dataCOM[2];
-        dataCh3[timCount] = (uint8_t)dataCOM[3];
-        dataCh4[timCount] = (uint8_t)dataCOM[4];
-        qDebug() << "dataChx = " << dataCh1[timCount] << " " << dataCh2[timCount]
-                 << " " << dataCh3[timCount] << " " << dataCh4[timCount];
-        qDebug() << "timCount = " << timCount;
-        timCount++;
+
+
+    dataCOM = serial->readAll();
+    //ui->textBrowser->insertPlainText(dataCOM);
+    qDebug() << "sizeof(dataCOM) = " << dataCOM.size();
+
+
+
+    for(int i = 0; i < dataCOM.size(); i++){
+        if(timCount == LENGHT){
+            timCount = 0;
+        }
+        if(dataCOM.size() - i < 5){
+            i=dataCOM.size();
+            dataCh1[timCount] = dataCh1[timCount-1];
+            dataCh2[timCount] = dataCh2[timCount-1];
+            dataCh3[timCount] = dataCh3[timCount-1];
+            dataCh4[timCount] = dataCh4[timCount-1];
+            timCount++;
+        }
+        if(timCount > LENGHT-10){
+            timCount = 0;
+        }
+        if(dataCOM[i]=='a'){
+            i++;
+            dataCh1[timCount] = (uint8_t)dataCOM[i];
+            i++;
+            dataCh2[timCount] = (uint8_t)dataCOM[i];
+            i++;
+            dataCh3[timCount] = (uint8_t)dataCOM[i];
+            i++;
+            dataCh4[timCount] = (uint8_t)dataCOM[i];
+            timCount++;
+        }
     }
-    else{
-        timCount++;
-    }
-    if(timCount%5 == 1){
+    if(timCount%10==0){
         ui->customPlot->graph(0)->setData(timer, dataCh1);
         ui->customPlot_2->graph(0)->setData(timer, dataCh2);
         ui->customPlot_3->graph(0)->setData(timer, dataCh3);
@@ -173,17 +190,9 @@ void MainWindow::serialReceived()
         ui->customPlot_2->replot();
         ui->customPlot_3->replot();
         ui->customPlot_4->replot();
-
     }
-
-
-
-        if(timCount == LENGHT-1){
-            timCount = 0;
-        }
-
-
 }
+
 
 /**************************************** Button Send ************************************************/
 void MainWindow::on_pushButton_clicked()
@@ -204,7 +213,7 @@ void MainWindow::on_pushButton_2_clicked()
     }
     //setup COM port
     serial->setBaudRate(QSerialPort::Baud115200);
-    serial->setBaudRate(460800);
+    serial->setBaudRate(921600);
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);
     serial->setStopBits(QSerialPort::OneStop);
@@ -219,6 +228,7 @@ void MainWindow::on_pushButton_4_clicked()
 {
     //rtimer = new QTimer();
     //connect(serial,SIGNAL(timeout()),this,SLOT(serialReceived()));
+    //while(socket->bytesAvailable()<8);
     connect(serial,SIGNAL(readyRead()),this,SLOT(serialReceived()));
     //rtimer->start(1000); // И запустим таймер
     setupGraph();
