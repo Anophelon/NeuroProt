@@ -24,6 +24,7 @@ void InitADC (void){ //PA0 - input ADC1 IN0
 					&  ~GPIO_PUPDR_PUPDR6;
 
 	ADC->CCR	 |= ADC_CCR_ADCPRE_1; 											//Presc = 6 => ADC 10Mhz
+<<<<<<< Updated upstream
 
 	//Sample time 480 cycles
 		
@@ -43,6 +44,19 @@ void InitADC (void){ //PA0 - input ADC1 IN0
 	ADC1->CR1 	|= ADC_CR1_SCAN;												//Scan mode
 	ADC1->CR1 	|= ADC_CR1_RES_1;
 	//ADC1->CR1 	|= ADC_CR1_JAUTO;
+=======
+	
+
+	ADC1->SMPR2  |= (ADC_SMPR2_SMP0_2 | ADC_SMPR2_SMP0_1 | ADC_SMPR2_SMP0_0); 	//Sample time 480 cycles                                                                                                                                                                            
+  ADC1->CR2 	 |= ADC_CR2_EXTSEL; 											//                                                                                                         
+  ADC1->CR2 	 |= ADC_CR2_EXTEN;												//
+	ADC1->CR1 |=  ADC_CR1_SCAN;
+	ADC1->CR2 	 |= ADC_CR2_EOCS;
+  ADC1->CR2 	 &= ~ADC_CR2_CONT; 												//Single conversion mode 
+  ADC1->SQR3	 &= ~ADC_SQR3_SQ1_0; 											//Choose IN0
+	ADC1->CR2 	 |= ADC_CR2_ADON;												//A/D Converter ON
+
+>>>>>>> Stashed changes
 
 	ADC1->JSQR = ADC_JSQR_JL;
 	ADC1->JSQR &= ~ADC_JSQR_JSQ1;												//CH0 1st
@@ -56,6 +70,7 @@ void InitADC (void){ //PA0 - input ADC1 IN0
 
 uint16_t StartConvADC (void)
 {
+
 	ADC1->CR2 |= ADC_CR2_SWSTART;
 	while (!(ADC1->SR & ADC_SR_EOC));
 	return (ADC1->DR);

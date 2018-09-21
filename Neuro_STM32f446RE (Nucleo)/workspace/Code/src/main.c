@@ -11,11 +11,17 @@ int main(void)
 	InitUART();
 	//InitTIM2();
 	InitADC();
+<<<<<<< Updated upstream
 	InitDMAuart(buffer);
 	InitTIM4();
 
 	//xTaskCreate(xTaskNextionHMI,"HMI",128,NULL,1,NULL);
 	//xTaskCreate(xTaskConvADC,"ADC",128,NULL,2,NULL);
+=======
+
+	xTaskCreate(xTaskNextionHMI,"HMI",512,NULL,1,NULL);
+	xTaskCreate(xTaskConvADC,"ADC",512,NULL,2,NULL);
+>>>>>>> Stashed changes
 	//xTaskCreate(vTaskTest,"Test",32,NULL,1,NULL);
 	xTaskCreate(vTaskTest2,"Test",32,NULL,1,NULL);
 
@@ -68,6 +74,7 @@ void xTaskConvADC (void *argument)
 	char adcResultArr[3];
 
 	while(1)
+<<<<<<< Updated upstream
 	{
 		adcResult = StartConvADC();		//max = 0xFFFF = 4095
 		adcResult /= 16;				//max = 0xFF   = 255
@@ -78,6 +85,12 @@ void xTaskConvADC (void *argument)
          adcResult = ADC1->JDR1;
 		*/
 		// Test Signal to HMI
+=======
+	{	
+		adcResult = StartConvADC();			//max 0xfff = 4095
+		adcResult /= 16;								//max 0xff	= 255
+//****************************** Test Signal to HMI **********************************
+>>>>>>> Stashed changes
 		/*
 		adcResult=i;
 		if(i>250)
