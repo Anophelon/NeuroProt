@@ -21,7 +21,7 @@ QVector<double> dataCh1(LENGHT);
 QVector<double> dataCh2(LENGHT);
 QVector<double> dataCh3(LENGHT);
 QVector<double> dataCh4(LENGHT);
-unsigned int timCount = 0;
+int timCount = 0;
 /******************************************** Main ***************************************************/
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -52,107 +52,11 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::serialReceived(){
-    //ASCII
-    /*
+
     QByteArray dataCOM;
-    int ch[4] = {0,0,0,0};
-    dataCOM = serial->readLine();
-    ui->textBrowser->insertPlainText(dataCOM);
-    qDebug() <<dataCOM;
-
-    //int q = dataCOM.size();
-    char *dataChar = dataCOM.data();
-    //qDebug() <<q;
-    if( ((dataChar[0] == '1') |(dataChar[0] == '2') |(dataChar[0] == '3') |(dataChar[0] == '4') |(dataChar[0] == '5') |
-            (dataChar[0] == '6') |(dataChar[0] == '7') |(dataChar[0] == '8') |(dataChar[0] == '9') |(dataChar[0] == '0'))
-            & (dataCOM.size() == 17) )
-    {
-        ch[0] = ((int)dataChar[0] - '0')*100 + ((int)dataChar[1] - '0')*10 +((int)dataChar[2] - '0');
-        ch[1] = ((int)dataChar[4] - '0')*100 + ((int)dataChar[5] - '0')*10 +((int)dataChar[6] - '0');
-        ch[2] = ((int)dataChar[8] - '0')*100 + ((int)dataChar[9] - '0')*10 +((int)dataChar[10] - '0');
-        ch[3] = ((int)dataChar[12] - '0')*100 + ((int)dataChar[13] - '0')*10 +((int)dataChar[14] - '0');
-
-        for (int i = 0; i<5; i++)
-        {
-         ui->customPlot->graph(0)->addData(timer, ch[0]);
-         ui->customPlot_2->graph(0)->addData(timer, ch[1]);
-         ui->customPlot_3->graph(0)->addData(timer, ch[2]);
-         ui->customPlot_4->graph(0)->addData(timer, ch[3]);
-
-         ui->customPlot->xAxis->setRange(0, timer);
-         ui->customPlot_2->xAxis->setRange(0, timer);
-         ui->customPlot_3->xAxis->setRange(0, timer);
-         ui->customPlot_4->xAxis->setRange(0, timer);
-
-         ui->customPlot->replot();
-         ui->customPlot_2->replot();
-         ui->customPlot_3->replot();
-         ui->customPlot_4->replot();
-         timer++;
-         //Simulate delay
-         // std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        }
-        */
-
-    /*///////////////////////////////////////////////////////////////////////*/
-    /*
-    QByteArray dataCOM;
-    int ch[4] = {0,0,0,0};
-    //char symb;
-    int srchCnt = 0;
-    int pntCnt = 0;
-
-        //while( ( serial->canReadLine() ) != true){}
-        dataCOM = serial->readLine();
-        qDebug() << "dataCOM[0] = " << dataCOM[0];
-
-        if (dataCOM[0]=='a')
-        {
-            qDebug() << "srchCnt = " << srchCnt;
-            srchCnt = 0;
-            pntCnt++;
-            qDebug() << "to graph";
-            ch[0] =  (uint8_t)dataCOM[1];
-            qDebug() << "ch[0] = " << ch[0];
-
-            ch[1] = (uint8_t)dataCOM[2];
-            qDebug() << "ch[1] = " << ch[1];
-
-            ch[2] = (uint8_t)dataCOM[3];
-            qDebug() << "ch[2] = " << ch[2];
-
-            ch[3] = (uint8_t)dataCOM[4];
-            qDebug() << "ch[3] = " << ch[3];
-
-
-                ui->customPlot->graph(0)->addData(timer, ch[0]);
-                ui->customPlot_2->graph(0)->addData(timer, ch[1]);
-                ui->customPlot_3->graph(0)->addData(timer, ch[2]);
-                ui->customPlot_4->graph(0)->addData(timer, ch[3]);
-
-
-                timer++;
-
-         }
-         else {timer++;srchCnt++;}
-         // ui->textBrowser->insertPlainText(dataCOM);
-    if ( timer%1 == 0 ){
-
-    ui->customPlot->replot();
-    ui->customPlot_2->replot();
-    ui->customPlot_3->replot();
-    ui->customPlot_4->replot();
-    qDebug() << "pntCnt = " << pntCnt;
-    }
-*/
-    QByteArray dataCOM;
-
-
     dataCOM = serial->readAll();
     //ui->textBrowser->insertPlainText(dataCOM);
     qDebug() << "sizeof(dataCOM) = " << dataCOM.size();
-
-
 
     for(int i = 0; i < dataCOM.size(); i++){
         if(timCount == LENGHT){
@@ -192,8 +96,6 @@ void MainWindow::serialReceived(){
         ui->customPlot_4->replot();
     }
 }
-
-
 /**************************************** Button Send ************************************************/
 void MainWindow::on_pushButton_clicked()
 {
@@ -226,16 +128,9 @@ void MainWindow::on_pushButton_2_clicked()
 /**************************************** Button Get *************************************************/
 void MainWindow::on_pushButton_4_clicked()
 {
-    //rtimer = new QTimer();
-    //connect(serial,SIGNAL(timeout()),this,SLOT(serialReceived()));
-    //while(socket->bytesAvailable()<8);
     connect(serial,SIGNAL(readyRead()),this,SLOT(serialReceived()));
-    //rtimer->start(1000); // И запустим таймер
     setupGraph();
-
-
 }
-
 /************************************** Button Close Port ********************************************/
 void MainWindow::on_pushButton_3_clicked()
 {
